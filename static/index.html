@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <h1>Ingrese producto</h1>
+    <div style="padding: 3px; border: 2px solid black;">
+        <form action="/productos" method="post">
+            <p>Item</p>
+            <input type="text" name="item">
+            <p>Precio</p>
+            <input type="text" name="precio">
+            <p>URL foto</p>
+            <input type="text" name="url">
+            <br>
+            <button style="margin: 3px">ENVIAR</button>
+        </form>
+    </div>
+
+    <div style="padding: 3px; border: 2px solid black;">
+        
+        <form action="/productos" method="get" style="margin: 10px">
+            <button>VER TODO</button>
+        </form>
+
+    </div>
+
+
+
+    <div style="padding: 3px; border: 2px solid black;">
+        <h2>ESTO POR EL MOMENTO NO ANDA EN EL HTML PERO SU EN TC</h2>
+        <div style="padding: 3px; border: 2px solid black;">
+        
+            <form action="/productos" method="get" style="margin: 10px">
+                <p>Id</p>
+                    <input type="text" name="id">
+                <button>VER ITEM</button>
+            </form>
+    
+        </div>
+        <div style="padding: 3px; border: 2px solid black;">
+            <h2>REMPLAZAR</h2>
+            <form action="/productos/" method="put">
+                <p>Id</p>
+                <input type="text" name="id">
+                <p>Item</p>
+                <input type="text" name="item">
+                <p>Precio</p>
+                <input type="text" name="precio">
+                <p>URL foto</p>
+                <input type="text" name="url">
+                <br>
+                <button style="margin: 3px">REMPLAZAR</button>
+            </form>
+        </div>
+        <div style="padding: 3px; border: 2px solid black;">
+            <h2>ELIMINAR</h2>
+            <form action="/productos/" method="delete">
+                <p>Id</p>
+                <input type="text" name="id">
+                <br>
+                <button style="margin: 3px">ELIMINAR</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
