@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <img style="width: 400px; height: 300px" src="https://th.bing.com/th/id/R.f5961dbf6440a1a6558cb7b04745bb1b?rik=shMA1LulWC9rfw&pid=ImgRaw&r=0">
+    <br>
+    <h2 style="margin: 0;">YA BASTA CODER</h2>
+    <br>
+    <button onclick="location.href='/'">VOLVER A PRINCIPAL</button>
+    <br>
+    <h1><%= "PRODUCTOS" %></h1> <% objetos.forEach(coso => { %>
+        <h2><%= coso.objeto %></h2>
+        <h2><%= coso.precio %></h2>
+        <img src=<%= coso.url %> alt="">
+        <% }) %>
+</body>
+</html>
