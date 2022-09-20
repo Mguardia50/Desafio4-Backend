@@ -5,22 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     
-
+    <main>
     <h1>Ingrese producto</h1>
     <div style="padding: 3px; border: 2px solid black;">
-        <form action="/productos" method="post">
+        <form onsubmit="return probando(event)" action="/productos" method="post">
             <p>Item</p>
-            <input type="text" name="item">
+            <input id="nombreProducto" type="text" name="item">
             <p>Precio</p>
-            <input type="text" name="precio">
+            <input id="precioProducto" type="text" name="precio">
             <p>URL foto</p>
-            <input type="text" name="url">
+            <input id="urlProducto" type="text" name="url">
             <br>
-            <button style="margin: 3px">ENVIAR</button>
+            <button style="margin: 3px">ENVIAR CON METHOD POST</button>
         </form>
+        <button id="btnVer">VER TODO EN SOCKET</button>
     </div>
 
     <div style="padding: 3px; border: 2px solid black;">
@@ -28,15 +30,35 @@
         <form action="/productos" method="get" style="margin: 10px">
             <button>VER TODO</button>
         </form>
-
+        
         <button onclick="location.href='/queganasdeperdertiempo'">VER EN PERRO VISCO</button>
         <button onclick="location.href='/yabastacoder'">VER EN ESA OTRA COSA SE LLAME COMO SE LLAME</button>
 
     </div>
+    <div style="padding: 10px; border: 2px solid black;">
+        <form onsubmit="return enviarMensaje(this)">
+            <p>Ingrese su mail</p>
+            <input type="text" id="mail">
+            <p>Nombre</p>
+            <input type="text" id="nombre">
+            <p>Mensaje</p>
+            <input type="text" id="chat_mensaje">
+            <br>
+            <button id="btnEnviar">ENVIAR</button>
+        </form>
+            <button id="btnEliminar">ELIMINAR TODOS LOS MSJ</button>
+    </div>
+    
+    </main>
+    <div id="mensajes" class="contenedor_mensajes">
+        <h1>CHAT</h1>
+    </div>
 
+    <aside class="contenedor_productos" id="productContainer">
+        <h1>Contenedor ultra responsive</h1>
+    </aside>
 
-
-    <div style="padding: 3px; border: 2px solid black;">
+    <!-- <div style="padding: 3px; border: 2px solid black;">
         <h2>ESTO POR EL MOMENTO NO ANDA EN EL HTML PERO SU EN TC</h2>
         <div style="padding: 3px; border: 2px solid black;">
         
@@ -71,6 +93,10 @@
                 <button style="margin: 3px">ELIMINAR</button>
             </form>
         </div>
-    </div>
+    </div> -->
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="chat.js"></script>
+    <script src="productos.js"></script>
 </body>
 </html>

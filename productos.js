@@ -44,8 +44,7 @@ router.post('/productos', (req, res) =>{
     const idProducto = Items.length;
     Items.push({id: idProducto, precio: producto.precio, objeto: producto.item, url: producto.url});
 
-
-    res.send("<h1> ITEM AGREGADO :</h1> " + JSON.stringify({agregada: producto, agregado2: file, id: Items.length }) + `<button onclick="location.href='/productos'">IR A PRODUCTOS</button>`)
+    res.send("<h1> ITEM AGREGADO :</h1> " + JSON.stringify({agregada: producto, agregado2: file, id: Items.length }) + `<button onclick="location.href='/productos'">IR A PRODUCTOS</button>`) 
 })
 
 router.put('/productos/:id', (req, res) =>{
