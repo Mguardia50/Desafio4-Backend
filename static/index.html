@@ -15,14 +15,16 @@
         <form onsubmit="return probando(event)" action="/productos" method="post">
             <p>Item</p>
             <input id="nombreProducto" type="text" name="item">
+            <p>Stock</p>
+            <input id="stockProducto" type="text" name="stock">
             <p>Precio</p>
             <input id="precioProducto" type="text" name="precio">
             <p>URL foto</p>
             <input id="urlProducto" type="text" name="url">
             <br>
-            <button style="margin: 3px">ENVIAR CON METHOD POST</button>
+            <button style="margin: 3px">ENVIAR CON METHOD POST Y AGREGAR A LA DB</button>
         </form>
-        <button id="btnVer">VER TODO EN SOCKET</button>
+        <button id="btnVer">VER TODO EN SOCKET (SOLO VER)</button>
     </div>
 
     <div style="padding: 3px; border: 2px solid black;">
@@ -97,6 +99,6 @@
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="chat.js"></script>
-    <script src="productos.js"></script>
+    <script  src="productos.js"></script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 const socket = io.connect();
 
+
 function render(data) {
     const html = data
       .map(

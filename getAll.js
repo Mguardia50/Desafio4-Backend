@@ -1,46 +1,48 @@
 
-const fs = require('fs');
+const knex = require ('knex');
+const connection = require("./mysql/db.js"); 
+const Knex = knex(connection);
 
 
-const Items = [];
+
+
+let Items = [];
 
 
 
  class Contenedor {
 
     
-    constructor(archivo){
+    constructor(table){
 
-        
-        this.archivo = archivo;
+        this.table = table;
+
     }
 
     getAll(){
-        
-            fs.promises.readFile(this.archivo) 
-            .then( objetosVenta => {
 
-            let arrayDatos = JSON.parse(objetosVenta);
 
             
-                arrayDatos.map((element)=>{
-                    Items.push({id: element.id, objeto: element.objeto, precio: element.precio, url: element.url});
-                
+             Knex.from(this.table).select('*')
+                .then( rows => {
+                    let arrayDatos = (JSON.parse(JSON.stringify(rows)))
+                    Items.push(...arrayDatos);
+                    //console.log(Items)
                 })
-   
-            })
-            .catch(err => {
-                console.log(err)
-            })
+                .catch((e)=>console.log(e))
+                //.finally(()=> Knex.destroy());  
+
+
         
     }
 
 
 }
 
- let container = new Contenedor("./objetos.json");
+ let container = new Contenedor('productos');
 
 container.getAll(); 
+
 
 module.exports = Items;
 

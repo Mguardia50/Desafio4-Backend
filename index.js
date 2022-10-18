@@ -7,6 +7,20 @@ const app = express();
 const server = http.createServer(app);
 const io = require("socket.io")(server);
 
+const knex = require ("knex");
+const sqliteConfig ={
+    client: 'sqlite3',
+    connection: {
+        filename: './DB/myDB.sqlite',
+    },
+    useNullAsDefault: true
+};
+const Knex =knex(sqliteConfig)
+
+const connection = require("./mysql/db.js"); 
+const Knex2 = knex(connection)
+
+
 let Mensajes= [];
 let productos = [];
 let productosAgregados = [];
@@ -35,22 +49,55 @@ app.use('/yabastacoder', todohacelomismo);
 io.on('connection', socket =>{
     console.log("este es el idsoquete: " + socket.id);
     
+    
 
     socket.on('new_msg', (data)=>{
         console.log("esto es data " + JSON.stringify(data));
-        Mensajes.push(data);
-        io.sockets.emit('listaMensajes', Mensajes);
+        //Mensajes.push(data);
+
+        //YA SEEEE QUE NO HAY QUE MEZCLAR Y TENGO QUE IMPORTAR, PERO BANCAME ESTA PORFA!!! 
+        Knex.from('mensajes').insert(data)
+        .then(()=>console.log("agregado"))
+        .catch((e)=>console.log(e))
+        ;
+        Knex.from('mensajes').select('*')
+        .then( rows => {
+            Mensajes = []
+            let arrayDatos = (JSON.parse(JSON.stringify(rows)))
+            console.table(rows)
+            Mensajes.push(...arrayDatos);
+            
+        })
+        //.then(()=>console.log("agregado"))
+        .catch((e)=>console.log(e))
+        .finally(()=>{
+            io.sockets.emit('listaMensajes', Mensajes);
+            }); 
+
+        
     })
 
     socket.on('new_prod', (resp, resp2)=>{
         productos = [];
-        /* comentario importante: el maldito desafio te obligaba a usar el desafio anterior y HBS, lo cual
-         hace que el each lleve a todos dentro del array, conviene hacer un renderizado y no....esta atrocidad
-         en fin, me dio paja hacer todo de nuevo, pa la proxima, esta vez lo atamos con alambre*/
-        productos.push(resp);
-        productosAgregados.push(resp2);
-        const productosfinal = productos.concat(productosAgregados);
-        io.sockets.emit('cargarProductos', productosfinal);
+        //productos.push(resp);
+        //productosAgregados.push(resp2);
+
+        Knex2.from('productos').insert(resp2)
+        .then(()=>console.log("agregado"))
+        .catch((e)=>console.log(e))
+        ;  
+        Knex2.from('productos').select('*')
+        .then( rows => {
+            let arrayDatos = (JSON.parse(JSON.stringify(rows)))
+            //console.table(rows)
+            productos.push(...arrayDatos)
+            //console.log("esto es prod" + JSON.stringify(productos))
+            io.sockets.emit('cargarProductos', productos);
+        })
+        .catch((e)=>console.log(e))
+        //const productosfinal = productos.concat(productosAgregados);
+
+        //io.sockets.emit('cargarProductos', productos);
     })
 
     socket.on('eliminarTodo', ()=>{

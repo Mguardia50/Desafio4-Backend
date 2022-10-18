@@ -2,11 +2,16 @@ const express = require ("express");
 const handlebars = require ('express-handlebars');
 const Router = express;
 
+const knex = require ('knex');
+const connection = require("./mysql/db.js"); 
+const Knex = knex(connection);
+
 const router = Router();
 const app = express();
 
 const  Items  = require("./getAll");
 const datos = require("./pushItems");
+
 
 router.engine("hbs", handlebars.engine({
     extname: 'hbs',
@@ -19,7 +24,7 @@ router.set('view engine', 'hbs');
 
 
 router.get('/productos', (req, res) =>{
-    
+    const  Items2  = require("./getAll");
     /* await pushItems(); */
     res.render('index', {
         layout: "index",
@@ -42,7 +47,11 @@ router.post('/productos', (req, res) =>{
     const {file} = req;
     const producto = req.body;
     const idProducto = Items.length;
-    Items.push({id: idProducto, precio: producto.precio, objeto: producto.item, url: producto.url});
+
+    Knex('productos').insert({objeto: producto.item, stock: producto.stock, url: producto.url, precio: producto.precio})
+    .then(()=>console.log("agregado"))
+    .catch((e)=>console.log(e))
+    //.finally(()=>Knex.destroy());
 
     res.send("<h1> ITEM AGREGADO :</h1> " + JSON.stringify({agregada: producto, agregado2: file, id: Items.length }) + `<button onclick="location.href='/productos'">IR A PRODUCTOS</button>`) 
 })
